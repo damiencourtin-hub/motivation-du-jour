@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ma motivation du jour</title>
+<title>Carte du jour</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Quicksand:wght@500;600;700&display=swap');
 
@@ -14,24 +14,17 @@
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #FDEFF4 0%, #EDF2FB 50%, #ECF6EE 100%);
-  }
-
-  .view {
-    min-height: 100vh;
     display: flex;
+    align-items: center;
     justify-content: center;
     padding: 24px;
   }
 
-  .view-card { align-items: center; }
-  .view-recap { align-items: flex-start; padding: 28px 20px 40px; }
-
-  /* ====================== CARTE DU JOUR ====================== */
   .card {
     position: relative;
     overflow: hidden;
     border-radius: 30px;
-    padding: 26px 22px 24px;
+    padding: 24px 22px;
     max-width: 380px;
     width: 100%;
     background: linear-gradient(160deg, #FFEbDD, #FFC2A8);
@@ -39,34 +32,55 @@
     transition: background 0.5s ease;
   }
 
+  /* ---------- Bouton réglages ---------- */
+  .gear {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 5;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 3px 9px rgba(120, 110, 150, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8B83A6;
+  }
+  .gear:hover { background: #FFFFFF; }
+  .gear svg { width: 19px; height: 19px; }
+
+  /* ---------- Illustration : zone héros ---------- */
   .hero {
     position: relative;
-    height: 138px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    gap: 13px;
+    padding: 10px 0 4px;
     margin-bottom: 6px;
   }
 
-  .halo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 168px;
-    height: 168px;
-    transform: translate(-50%, -54%);
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0) 72%);
-    filter: blur(2px);
-  }
-
-  .icon {
+  .medallion {
     position: relative;
-    font-size: 66px;
-    line-height: 1;
-    filter: drop-shadow(0 8px 14px rgba(120, 100, 140, 0.22));
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+      inset 0 3px 8px rgba(255, 255, 255, 0.95),
+      inset 0 -6px 14px rgba(150, 130, 160, 0.10),
+      0 14px 28px rgba(130, 110, 150, 0.20);
+  }
+  .medallion svg {
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 3px 5px rgba(120, 100, 140, 0.18));
   }
 
   .badge {
@@ -81,6 +95,7 @@
     box-shadow: 0 4px 10px rgba(120, 100, 140, 0.14);
   }
 
+  /* ---------- En-tête ---------- */
   .head {
     position: relative;
     text-align: center;
@@ -103,6 +118,7 @@
     margin: 0;
   }
 
+  /* ---------- Panneau givré ---------- */
   .panel {
     position: relative;
     background: rgba(255, 255, 255, 0.66);
@@ -146,7 +162,8 @@
     text-align: left;
   }
 
-  .pensee-icon { font-size: 18px; line-height: 1.4; }
+  .pensee-icon { flex-shrink: 0; line-height: 1; margin-top: 1px; }
+  .pensee-icon svg { width: 18px; height: 18px; display: block; color: #E29AAE; }
 
   .pensee-label {
     font-size: 11px;
@@ -163,99 +180,6 @@
     line-height: 1.6;
   }
 
-  .mood {
-    margin-top: 14px;
-    background: rgba(255, 255, 255, 0.58);
-    border-radius: 16px;
-    padding: 13px 14px 14px;
-    text-align: center;
-  }
-
-  .mood-label {
-    font-size: 11px;
-    color: #B58E9A;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
-
-  .mood-faces {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-  }
-
-  .mood-face {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 14px;
-    padding: 8px 0;
-    font-size: 24px;
-    line-height: 1;
-    filter: grayscale(0.55);
-    opacity: 0.65;
-    transition: transform 0.12s ease, opacity 0.15s ease, filter 0.15s ease, background 0.15s ease;
-  }
-
-  .mood-face:hover { transform: translateY(-2px); opacity: 0.9; }
-
-  .mood-face.selected {
-    filter: grayscale(0);
-    opacity: 1;
-    background: #FFF;
-    transform: translateY(-2px) scale(1.06);
-    box-shadow: 0 5px 12px rgba(120, 110, 150, 0.2);
-  }
-
-  .note-box {
-    margin-top: 12px;
-    background: rgba(255, 255, 255, 0.58);
-    border-radius: 16px;
-    padding: 13px 14px 14px;
-    text-align: left;
-    position: relative;
-  }
-
-  .note-label {
-    font-size: 11px;
-    color: #B58E9A;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-
-  .note-input {
-    width: 100%;
-    border: none;
-    background: rgba(255, 255, 255, 0.75);
-    border-radius: 12px;
-    padding: 10px 12px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: #5E5277;
-    resize: vertical;
-    min-height: 44px;
-    line-height: 1.5;
-    outline: none;
-    transition: box-shadow 0.15s ease;
-  }
-
-  .note-input::placeholder { color: #BBB1CC; }
-  .note-input:focus { box-shadow: 0 0 0 2px rgba(168, 221, 192, 0.7); }
-
-  .note-saved {
-    font-size: 11px;
-    color: #5E9C6E;
-    margin-top: 6px;
-    height: 14px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .note-saved.show { opacity: 1; }
-
   .actions {
     margin-top: 20px;
     display: flex;
@@ -267,36 +191,31 @@
     font-family: 'Poppins', sans-serif;
     border: none;
     border-radius: 20px;
-    padding: 11px 18px;
     font-size: 14px;
     cursor: pointer;
     transition: transform 0.1s ease, opacity 0.2s ease, background 0.2s ease;
   }
-
   button:active { transform: scale(0.96); }
 
   .nav-btn {
     background: rgba(255, 255, 255, 0.75);
     color: #9A92B5;
     width: 42px;
+    padding: 11px 0;
     font-size: 18px;
     box-shadow: 0 3px 8px rgba(120, 110, 150, 0.12);
   }
-
   .nav-btn:hover { background: #FFFFFF; }
 
   .done-btn {
     background: #D8EFE0;
     color: #4F8E6E;
     flex: 1;
+    padding: 11px 18px;
     font-weight: 500;
     box-shadow: 0 3px 8px rgba(110, 160, 130, 0.18);
   }
-
-  .done-btn.is-done {
-    background: #A8DDC0;
-    color: #34664C;
-  }
+  .done-btn.is-done { background: #A8DDC0; color: #34664C; }
 
   .outside-note {
     font-size: 12px;
@@ -305,31 +224,8 @@
     line-height: 1.4;
   }
 
-  .recap-link {
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 16px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #9A8FB5;
-    text-decoration: none;
-    padding: 11px 9px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.55);
-    transition: background 0.2s ease;
-  }
-
-  .recap-link:hover { background: rgba(255, 255, 255, 0.85); }
-
   .progress-wrap { margin-top: 16px; }
-
-  .progress-label {
-    font-size: 12px;
-    color: #9A92B5;
-    margin-bottom: 6px;
-  }
-
+  .progress-label { font-size: 12px; color: #9A92B5; margin-bottom: 6px; }
   .progress-bar {
     width: 100%;
     height: 9px;
@@ -337,7 +233,6 @@
     border-radius: 10px;
     overflow: hidden;
   }
-
   .progress-fill {
     height: 100%;
     width: 0%;
@@ -346,361 +241,269 @@
     transition: width 0.4s ease;
   }
 
-  /* ====================== RÉCAP ====================== */
-  .wrap { max-width: 440px; width: 100%; }
-
-  .rheader { text-align: center; margin-bottom: 22px; }
-
-  .rheader .kicker {
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #B58E9A;
-    margin-bottom: 4px;
-  }
-
-  .rheader h1 {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 27px;
-    font-weight: 700;
-    color: #5E5277;
-    margin: 0;
-  }
-
-  .ring-card {
-    background: rgba(255, 255, 255, 0.66);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 26px;
-    padding: 24px 22px;
-    box-shadow: 0 12px 30px rgba(120, 110, 150, 0.14);
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    margin-bottom: 18px;
-  }
-
-  .ring { position: relative; flex-shrink: 0; width: 116px; height: 116px; }
-  .ring svg { transform: rotate(-90deg); }
-
-  .ring-center {
-    position: absolute;
+  /* ---------- Panneau de réglages ---------- */
+  .settings {
+    position: fixed;
     inset: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 22px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
   }
+  .settings.open { opacity: 1; pointer-events: auto; }
 
-  .ring-pct {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #5E9C6E;
-    line-height: 1;
+  .settings-card {
+    width: 100%;
+    max-width: 360px;
+    max-height: calc(100vh - 44px);
+    overflow-y: auto;
+    background: #FFFFFF;
+    border-radius: 22px;
+    padding: 22px 20px;
+    box-shadow: 0 14px 32px rgba(120, 110, 150, 0.22);
+    text-align: left;
+    transform: translateY(8px) scale(0.98);
+    transition: transform 0.25s ease;
   }
+  .settings.open .settings-card { transform: translateY(0) scale(1); }
 
-  .ring-sub { font-size: 11px; color: #9A92B5; margin-top: 2px; }
-
-  .ring-text h2 {
+  .settings-card h2 {
     font-family: 'Quicksand', sans-serif;
     font-size: 19px;
     font-weight: 700;
     color: #5E5277;
-    margin: 0 0 6px;
+    margin: 0 0 4px;
+  }
+  .settings-sub {
+    font-size: 12.5px;
+    color: #9C8FB8;
+    margin-bottom: 18px;
+    line-height: 1.45;
   }
 
-  .ring-text p { font-size: 13.5px; color: #8A7F9E; line-height: 1.5; margin: 0; }
-
-  .streak {
-    background: linear-gradient(135deg, #FFE7CF, #FFD3B6);
-    border-radius: 22px;
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 22px;
-    box-shadow: 0 8px 20px rgba(220, 160, 120, 0.22);
-  }
-
-  .streak-icon { font-size: 32px; }
-
-  .streak-num {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: #B5683C;
-    line-height: 1;
-  }
-
-  .streak-label { font-size: 13px; color: #9C6B4C; margin-top: 3px; }
-
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 22px;
-  }
-
-  .stat { border-radius: 20px; padding: 15px 16px; box-shadow: 0 6px 16px rgba(120, 110, 150, 0.1); }
-
-  .stat-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .stat-icon { font-size: 19px; }
-
-  .stat-label {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 13px;
+  .field-label {
+    font-size: 12px;
     font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #A99FC0;
+    margin-bottom: 8px;
   }
+  .field { margin-bottom: 18px; }
 
-  .stat-count {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-  }
-
-  .stat-of { font-size: 12px; opacity: 0.7; font-weight: 500; }
-
-  .month { margin-bottom: 20px; }
-
-  .month-title {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #5E5277;
-    margin: 0 0 12px;
-    padding-left: 4px;
-  }
-
-  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 7px; }
-
-  .dow {
-    text-align: center;
-    font-size: 10.5px;
-    color: #B0A6C4;
-    font-weight: 500;
-    padding-bottom: 2px;
-  }
-
-  .cell {
-    aspect-ratio: 1;
-    border-radius: 13px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 500;
-    color: #A99FBC;
-    background: rgba(255, 255, 255, 0.55);
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .cell:not(.empty):hover {
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 7px 16px rgba(120, 110, 150, 0.22);
-  }
-
-  .cell.empty { background: transparent; box-shadow: none; cursor: default; }
-
-  .cell.done { color: #fff; font-weight: 600; box-shadow: 0 5px 12px rgba(120, 160, 130, 0.28); }
-
-  .cell .mood-dot {
-    position: absolute;
-    bottom: 2px;
-    font-size: 9px;
-    line-height: 1;
-  }
-
-  .cell.done .check {
-    position: absolute;
-    top: 3px;
-    right: 4px;
-    font-size: 8px;
-    opacity: 0.95;
-  }
-
-  .cell.today { outline: 2.5px solid #FFFFFF; outline-offset: -2.5px; }
-  .cell.today.notdone { box-shadow: 0 0 0 2px #E7B7C6; }
-
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    justify-content: center;
-    margin-bottom: 22px;
-  }
-
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8A7F9E; }
-  .dot { width: 13px; height: 13px; border-radius: 5px; }
-
-  .btn {
+  #start-input {
     width: 100%;
-    text-align: center;
     font-family: 'Poppins', sans-serif;
-    border: none;
-    border-radius: 20px;
-    padding: 14px 16px;
+    font-size: 15px;
+    color: #5A5468;
+    padding: 11px 13px;
+    border: 1.5px solid #ECE8F4;
+    border-radius: 13px;
+    background: #FBFAFE;
+  }
+  #start-input:focus { outline: none; border-color: #C9BEE6; }
+
+  .dur-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .dur-options button {
+    padding: 10px 0;
     font-size: 14px;
     font-weight: 500;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.8);
-    color: #7C6A99;
-    box-shadow: 0 4px 12px rgba(120, 110, 150, 0.14);
-    transition: transform 0.1s ease, background 0.2s ease;
+    color: #8B83A6;
+    background: #F4F1FA;
+    border-radius: 13px;
+  }
+  .dur-options button.active {
+    background: #6B5B95;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(107, 91, 149, 0.3);
   }
 
-  .btn:hover { background: #fff; }
-  .btn:active { transform: scale(0.97); }
-
-  .empty-note {
-    text-align: center;
+  .custom-dur {
+    display: flex;
+    align-items: center;
+    gap: 9px;
     font-size: 13.5px;
-    color: #9C8FB8;
-    line-height: 1.6;
-    padding: 8px 10px 16px;
+    color: #8B83A6;
   }
+  #dur-input {
+    width: 72px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: #5A5468;
+    text-align: center;
+    padding: 9px 8px;
+    border: 1.5px solid #ECE8F4;
+    border-radius: 11px;
+    background: #FBFAFE;
+  }
+  #dur-input:focus { outline: none; border-color: #C9BEE6; }
+
+  .topic-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .topic-chips button {
+    padding: 8px 14px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #8B83A6;
+    background: #F4F1FA;
+    border-radius: 20px;
+  }
+  .topic-chips button.active {
+    background: #6B5B95;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(107, 91, 149, 0.3);
+  }
+
+  .settings-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .settings-actions button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 14.5px;
+    font-weight: 500;
+  }
+  #settings-cancel { background: #F2EFF8; color: #9A92B5; }
+  #settings-cancel:hover { background: #ECE8F4; }
+  #settings-save {
+    background: #A8DDC0;
+    color: #2F6047;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(110, 160, 130, 0.25);
+  }
+  #settings-save:hover { background: #97D2B2; }
 </style>
 </head>
 <body>
-  <!-- ===================== VUE : CARTE DU JOUR ===================== -->
-  <div class="view view-card" id="view-card">
-    <div class="card" id="card">
-      <div class="hero">
-        <div class="halo"></div>
-        <div class="icon" id="icon">🌷</div>
-        <span class="badge" id="badge" style="display:none;"></span>
+  <div class="card" id="card">
+    <button class="gear" id="gear" aria-label="Réglages">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="17" x2="20" y2="17"></line>
+        <circle cx="9" cy="7" r="2.4" fill="#FBFAFE"></circle>
+        <circle cx="15" cy="12" r="2.4" fill="#FBFAFE"></circle>
+        <circle cx="8" cy="17" r="2.4" fill="#FBFAFE"></circle>
+      </svg>
+    </button>
+
+    <div class="hero">
+      <div class="medallion" id="medallion"></div>
+      <span class="badge" id="badge" style="display:none;"></span>
+    </div>
+    <div class="head">
+      <div class="date" id="date-label">Astuce</div>
+      <h1 class="title" id="title-label">Ouvre-moi dans Safari</h1>
+    </div>
+    <div class="panel">
+      <div class="exercise" id="exercise">Pour afficher la carte du jour, ouvre ce fichier dans Safari (ou un autre navigateur) plutôt qu'en aperçu rapide.</div>
+      <div class="motivation" id="motivation" style="display:none;"></div>
+      <div class="pensee-box" id="pensee-box" style="display:none;">
+        <span class="pensee-icon" id="pensee-icon"></span>
+        <div>
+          <div class="pensee-label" id="pensee-label">Pensée du jour</div>
+          <div class="pensee-text" id="pensee"></div>
+        </div>
       </div>
-      <div class="head">
-        <div class="date" id="date-label">Astuce</div>
-        <h1 class="title" id="title-label">Ouvre-moi dans Safari 🌷</h1>
+      <div class="actions">
+        <button class="nav-btn" id="prev-btn">‹</button>
+        <button class="done-btn" id="done-btn">Marquer comme fait</button>
+        <button class="nav-btn" id="next-btn">›</button>
       </div>
-      <div class="panel">
-        <div class="exercise" id="exercise">Pour afficher la carte du jour, ouvre ce fichier dans Safari (ou un autre navigateur) plutôt qu'en aperçu rapide.</div>
-        <div class="motivation" id="motivation" style="display:none;"></div>
-        <div class="pensee-box" id="pensee-box" style="display:none;">
-          <span class="pensee-icon">💛</span>
-          <div>
-            <div class="pensee-label">Pensée du jour</div>
-            <div class="pensee-text" id="pensee"></div>
-          </div>
+      <div class="outside-note" id="outside-note"></div>
+      <div class="progress-wrap">
+        <div class="progress-label" id="progress-label"></div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
-        <div class="mood" id="mood-box">
-          <div class="mood-label">Comment je me sens aujourd'hui ?</div>
-          <div class="mood-faces" id="mood-faces">
-            <button class="mood-face" data-mood="1" title="Difficile">😟</button>
-            <button class="mood-face" data-mood="2" title="Bof">😕</button>
-            <button class="mood-face" data-mood="3" title="Ça va">😐</button>
-            <button class="mood-face" data-mood="4" title="Bien">🙂</button>
-            <button class="mood-face" data-mood="5" title="Au top">😄</button>
-          </div>
-        </div>
-        <div class="note-box">
-          <div class="note-label">Mon mot du jour</div>
-          <textarea id="note-input" class="note-input" rows="2" placeholder="Écris ici une pensée, un ressenti, une victoire…"></textarea>
-          <div class="note-saved" id="note-saved">Enregistré ✓</div>
-        </div>
-        <div class="actions">
-          <button class="nav-btn" id="prev-btn">‹</button>
-          <button class="done-btn" id="done-btn">Marquer comme fait</button>
-          <button class="nav-btn" id="next-btn">›</button>
-        </div>
-        <div class="outside-note" id="outside-note"></div>
-        <div class="progress-wrap">
-          <div class="progress-label" id="progress-label"></div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill"></div>
-          </div>
-        </div>
-        <button class="recap-link" id="to-recap">Voir mon récap 🌸</button>
       </div>
     </div>
-  </div>
 
-  <!-- ===================== VUE : RÉCAP ===================== -->
-  <div class="view view-recap" id="view-recap" style="display:none;">
-    <div class="wrap">
-      <div class="rheader">
-        <div class="kicker">Juin – Juillet</div>
-        <h1>Mon récap 🌸</h1>
-      </div>
-
-      <div class="ring-card">
-        <div class="ring">
-          <svg width="116" height="116" viewBox="0 0 116 116">
-            <circle cx="58" cy="58" r="50" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="11"></circle>
-            <circle id="ring-fill" cx="58" cy="58" r="50" fill="none" stroke="url(#grad)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"></circle>
-            <defs>
-              <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#A8DDC0"></stop>
-                <stop offset="100%" stop-color="#84CBA6"></stop>
-              </linearGradient>
-            </defs>
-          </svg>
-          <div class="ring-center">
-            <div class="ring-pct" id="ring-pct">0%</div>
-            <div class="ring-sub" id="ring-sub">0 / 61</div>
+    <!-- Réglages -->
+    <div class="settings" id="settings">
+      <div class="settings-card">
+        <h2>Ma période</h2>
+        <div class="settings-sub">Choisis quand commence ton accompagnement et combien de temps il dure.</div>
+        <div class="field">
+          <div class="field-label">Date de début</div>
+          <input type="date" id="start-input">
+        </div>
+        <div class="field">
+          <div class="field-label">Durée d'accompagnement</div>
+          <div class="dur-options" id="dur-options">
+            <button data-d="21">21 j</button>
+            <button data-d="30">30 j</button>
+            <button data-d="60">60 j</button>
+            <button data-d="90">90 j</button>
+          </div>
+          <div class="custom-dur">
+            <span>Personnalisé :</span>
+            <input type="number" id="dur-input" min="1" max="365">
+            <span>jours</span>
           </div>
         </div>
-        <div class="ring-text">
-          <h2 id="ring-title">En route !</h2>
-          <p id="ring-msg">Chaque jour coché te rapproche de ton objectif.</p>
+        <div class="field">
+          <div class="field-label">Sujets de motivation</div>
+          <div class="topic-chips" id="topic-chips"></div>
+        </div>
+        <div class="settings-actions">
+          <button id="settings-cancel">Annuler</button>
+          <button id="settings-save">Enregistrer</button>
         </div>
       </div>
-
-      <div class="streak" id="streak" style="display:none;">
-        <div class="streak-icon">🔥</div>
-        <div class="streak-text">
-          <div class="streak-num" id="streak-num">0</div>
-          <div class="streak-label" id="streak-label">jours d'affilée</div>
-        </div>
-      </div>
-
-      <div class="stats" id="stats"></div>
-      <div id="calendar"></div>
-      <div class="legend" id="legend"></div>
-      <button class="btn" id="to-card">← Retour à la carte du jour</button>
-      <div class="empty-note" id="empty-note" style="display:none;"></div>
     </div>
   </div>
 
 <script>
 const exercices = [
-  {t:"10 min de marche rapide en musique", cat:"cardio", icon:"🚶"},
-  {t:"15 squats + 15 fentes (en douceur)", cat:"force", icon:"💪"},
-  {t:"20 min de vélo, vrai ou appartement", cat:"cardio", icon:"🚴"},
-  {t:"5 min d'étirements doux au réveil", cat:"souplesse", icon:"🧘"},
-  {t:"10 min de yoga, salutations au soleil", cat:"souplesse", icon:"🧘"},
-  {t:"30 min de marche avec une amie", cat:"plaisir", icon:"👯"},
-  {t:"Gainage : 3 fois 30 secondes", cat:"force", icon:"🔥"},
-  {t:"15 min de natation ou aquagym", cat:"cardio", icon:"🏊"},
-  {t:"Danse libre sur 3 musiques préférées", cat:"plaisir", icon:"💃"},
-  {t:"20 min de course ou marche rapide", cat:"cardio", icon:"🏃"},
-  {t:"5 min de mobilité épaules, hanches, chevilles", cat:"souplesse", icon:"🤸"},
-  {t:"5 min de montée d'escaliers", cat:"force", icon:"🏗️"},
-  {t:"15 min de pilates débutant (vidéo)", cat:"force", icon:"🤍"},
-  {t:"30 min de balade en forêt ou au parc", cat:"plaisir", icon:"🌳"},
-  {t:"10 min de renforcement abdos en douceur", cat:"force", icon:"💪"},
-  {t:"30 min de vélo en famille", cat:"plaisir", icon:"🚲"},
-  {t:"Étirements complets avant le coucher", cat:"souplesse", icon:"🌙"},
-  {t:"Marche active pendant un appel téléphonique", cat:"cardio", icon:"📱"},
-  {t:"10 min de corde à sauter ou jumping jacks", cat:"cardio", icon:"⏱️"},
-  {t:"10 min de yoga pour le dos", cat:"souplesse", icon:"🧘"},
-  {t:"1h de randonnée tranquille", cat:"plaisir", icon:"🥾"},
-  {t:"15 min de circuit poids du corps", cat:"force", icon:"🔥"},
-  {t:"Stretching des jambes après la douche", cat:"souplesse", icon:"🦵"},
-  {t:"Aquagym ou natation détente", cat:"plaisir", icon:"🏊"},
-  {t:"Marche rapide jusqu'au marché", cat:"cardio", icon:"🧺"},
-  {t:"5 min d'étirements et respiration profonde", cat:"souplesse", icon:"🌬️"},
-  {t:"10 min de renforcement fessiers", cat:"force", icon:"💪"},
-  {t:"Vélo balade découverte", cat:"plaisir", icon:"🚲"},
-  {t:"10 min de yoga doux et méditation", cat:"souplesse", icon:"🧘"},
-  {t:"20 min de running débutant", cat:"cardio", icon:"🏃"},
-  {t:"Journée détente : marche + étirements", cat:"plaisir", icon:"🌿"}
+  {t:"10 min de marche rapide en musique", cat:"cardio"},
+  {t:"15 squats + 15 fentes (en douceur)", cat:"force"},
+  {t:"20 min de vélo, vrai ou appartement", cat:"cardio"},
+  {t:"5 min d'étirements doux au réveil", cat:"souplesse"},
+  {t:"10 min de yoga, salutations au soleil", cat:"souplesse"},
+  {t:"30 min de marche avec une amie", cat:"plaisir"},
+  {t:"Gainage : 3 fois 30 secondes", cat:"force"},
+  {t:"15 min de natation ou aquagym", cat:"cardio"},
+  {t:"Danse libre sur 3 musiques préférées", cat:"plaisir"},
+  {t:"20 min de course ou marche rapide", cat:"cardio"},
+  {t:"5 min de mobilité épaules, hanches, chevilles", cat:"souplesse"},
+  {t:"5 min de montée d'escaliers", cat:"force"},
+  {t:"15 min de pilates débutant (vidéo)", cat:"force"},
+  {t:"30 min de balade en forêt ou au parc", cat:"plaisir"},
+  {t:"10 min de renforcement abdos en douceur", cat:"force"},
+  {t:"30 min de vélo en famille", cat:"plaisir"},
+  {t:"Étirements complets avant le coucher", cat:"souplesse"},
+  {t:"Marche active pendant un appel téléphonique", cat:"cardio"},
+  {t:"10 min de corde à sauter ou jumping jacks", cat:"cardio"},
+  {t:"10 min de yoga pour le dos", cat:"souplesse"},
+  {t:"1h de randonnée tranquille", cat:"plaisir"},
+  {t:"15 min de circuit poids du corps", cat:"force"},
+  {t:"Stretching des jambes après la douche", cat:"souplesse"},
+  {t:"Aquagym ou natation détente", cat:"plaisir"},
+  {t:"Marche rapide jusqu'au marché", cat:"cardio"},
+  {t:"5 min d'étirements et respiration profonde", cat:"souplesse"},
+  {t:"10 min de renforcement fessiers", cat:"force"},
+  {t:"Vélo balade découverte", cat:"plaisir"},
+  {t:"10 min de yoga doux et méditation", cat:"souplesse"},
+  {t:"20 min de running débutant", cat:"cardio"},
+  {t:"Journée détente : marche + étirements", cat:"plaisir"}
 ];
 
 const motivations = [
@@ -775,21 +578,98 @@ const pensees = [
   "Continue, tu fais quelque chose d'important pour toi."
 ];
 
+// Sujets de motivation sélectionnables (la pensée du jour pioche dans les sujets cochés)
+const topics = [
+  { id: "alcool", label: "Sans alcool", phrases: pensees },
+  { id: "confiance", label: "Confiance en soi", phrases: [
+    "Tu es capable, même quand le doute s'invite.",
+    "Parle-toi comme à ta meilleure amie.",
+    "Tes efforts comptent, même les plus discrets.",
+    "Tu n'as pas à être parfaite pour être précieuse.",
+    "Chaque petit pas nourrit ta confiance.",
+    "Tu mérites ta propre fierté, aujourd'hui.",
+    "Tu es plus forte que tes pensées négatives."
+  ]},
+  { id: "energie", label: "Sommeil & énergie", phrases: [
+    "Une bonne nuit de sommeil change toute ta journée.",
+    "Couche-toi un peu plus tôt, ton corps adore ça.",
+    "L'énergie se cultive : bouge, respire, repose-toi.",
+    "Offre-toi de vraies pauses, sans culpabilité.",
+    "Ton corps récupère pendant que tu dors, chouchoute-le.",
+    "Un réveil en douceur prépare une belle journée.",
+    "Écoute ta fatigue, elle te guide vers l'équilibre."
+  ]},
+  { id: "alimentation", label: "Alimentation", phrases: [
+    "Mange en pleine conscience, savoure chaque bouchée.",
+    "Un fruit, un grand verre d'eau : déjà un beau geste.",
+    "Nourris-toi avec douceur, sans interdits stricts.",
+    "Ton assiette colorée, c'est ton énergie de demain.",
+    "Bois de l'eau régulièrement, ton corps te remercie.",
+    "Pas de perfection, juste de l'équilibre.",
+    "Écoute ta faim et ta satiété, elles savent."
+  ]},
+  { id: "serenite", label: "Sérénité & stress", phrases: [
+    "Respire profondément trois fois, tout de suite.",
+    "Tu n'as pas à tout porter aujourd'hui.",
+    "Ralentis : l'important avance aussi en douceur.",
+    "Une minute de calme vaut mille pensées agitées.",
+    "Pose ce que tu peux, garde l'essentiel.",
+    "Le stress passe, ta sérénité revient toujours.",
+    "Accorde-toi un instant rien que pour respirer."
+  ]},
+  { id: "gratitude", label: "Gratitude", phrases: [
+    "Note trois petites choses belles d'aujourd'hui.",
+    "La gratitude transforme ce que tu as déjà.",
+    "Un sourire reçu, un café chaud : ça compte.",
+    "Merci à ton corps pour tout ce qu'il fait.",
+    "Célèbre les petites victoires, elles font les grandes.",
+    "Aujourd'hui contient au moins une belle chose.",
+    "Apprécie le chemin, pas seulement l'arrivée."
+  ]}
+];
+
 const catInfo = {
-  cardio:    { label: "Cardio",      bg: "#FFE0CE", fg: "#C97B5A", icon: "🚶", color: "#F0A87E" },
-  force:     { label: "Force douce", bg: "#FBEEC0", fg: "#B89126", icon: "💪", color: "#E6C566" },
-  souplesse: { label: "Souplesse",   bg: "#D8E9FA", fg: "#5588B5", icon: "🧘", color: "#7FB0DC" },
-  plaisir:   { label: "Plaisir",     bg: "#DCF0DF", fg: "#5E9C6E", icon: "💃", color: "#84C695" }
+  cardio:    { label: "Cardio",      bg: "#FFE0CE", fg: "#C97B5A" },
+  force:     { label: "Force douce", bg: "#FBEEC0", fg: "#B89126" },
+  souplesse: { label: "Souplesse",   bg: "#D8E9FA", fg: "#5588B5" },
+  plaisir:   { label: "Plaisir",     bg: "#DCF0DF", fg: "#5E9C6E" }
 };
 
+// Palettes pastel par catégorie pour les illustrations de fond
 const catVisual = {
-  cardio:    { colors: ["#FFEEE0", "#FFD7C2", "#FFC0A4"], glow: "#FFB495", text: "#A85B3C" },
-  force:     { colors: ["#FFF7DE", "#FBEBBC", "#F6DD9C"], glow: "#F1D079", text: "#9F7D22" },
-  souplesse: { colors: ["#EAF2FC", "#D5E6F8", "#BFD8F3"], glow: "#A8CCEF", text: "#3F6F9C" },
-  plaisir:   { colors: ["#EBF7ED", "#D6EFDA", "#C0E6C7"], glow: "#A7DCB2", text: "#3F7C53" }
+  cardio:    { colors: ["#FFEEE0", "#FFD7C2", "#FFC0A4"], glow: "#FFB495", text: "#A85B3C", med: ["#FFF4EC", "#FFD9C6"] },
+  force:     { colors: ["#FFF7DE", "#FBEBBC", "#F6DD9C"], glow: "#F1D079", text: "#9F7D22", med: ["#FFFaEC", "#FBEAC0"] },
+  souplesse: { colors: ["#EAF2FC", "#D5E6F8", "#BFD8F3"], glow: "#A8CCEF", text: "#3F6F9C", med: ["#F1F7FE", "#D8E8F9"] },
+  plaisir:   { colors: ["#EBF7ED", "#D6EFDA", "#C0E6C7"], glow: "#A7DCB2", text: "#3F7C53", med: ["#F2FaF3", "#D9EFDD"] }
 };
 
-const moodEmoji = { "1":"😟", "2":"😕", "3":"😐", "4":"🙂", "5":"😄" };
+// Emblèmes graphiques (trait fin) par catégorie
+function glyphSVG(cat) {
+  let inner = "";
+  if (cat === "cardio") {
+    inner = '<polyline points="6,34 19,34 25,19 33,47 40,28 45,34 58,34"/>';
+  } else if (cat === "force") {
+    inner = '<rect x="6" y="22" width="8" height="20" rx="3"/>' +
+            '<rect x="16" y="27" width="5" height="10" rx="2"/>' +
+            '<line x1="21" y1="32" x2="43" y2="32"/>' +
+            '<rect x="43" y="27" width="5" height="10" rx="2"/>' +
+            '<rect x="50" y="22" width="8" height="20" rx="3"/>';
+  } else if (cat === "souplesse") {
+    inner = '<path d="M32 9 C19 21 19 41 32 55 C45 41 45 21 32 9 Z"/>' +
+            '<line x1="32" y1="15" x2="32" y2="49"/>';
+  } else {
+    inner = '<circle cx="32" cy="32" r="10"/>';
+    for (let k = 0; k < 8; k++) {
+      const a = k * Math.PI / 4;
+      const x1 = (32 + 15 * Math.cos(a)).toFixed(1), y1 = (32 + 15 * Math.sin(a)).toFixed(1);
+      const x2 = (32 + 21 * Math.cos(a)).toFixed(1), y2 = (32 + 21 * Math.sin(a)).toFixed(1);
+      inner += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+    }
+  }
+  return '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>';
+}
+
+const heartSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.5C5 15.5 4 10.6 6.8 8.2 8.8 6.5 11 7.6 12 9.4 13 7.6 15.2 6.5 17.2 8.2 20 10.6 19 15.5 12 20.5Z"/></svg>';
 
 function illustration(d) {
   const v = catVisual[d.ex.cat];
@@ -807,61 +687,104 @@ function illustration(d) {
   }
 }
 
-const days = [];
-for (let i = 0; i < 61; i++) {
-  const ex = exercices[i % exercices.length];
-  const mot = motivations[i % motivations.length];
-  const pensee = pensees[i % pensees.length];
-  let label, num, month;
-  if (i < 30) { num = i + 1; month = 6; label = num + " juin"; }
-  else { num = i - 29; month = 7; label = num + " juillet"; }
-  days.push({ i, num, month, label, ex, mot, pensee });
+/* ---------- Période configurable ---------- */
+const moisFr = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+
+function pad(n){ return String(n).padStart(2, "0"); }
+function toISO(dt){ return dt.getFullYear() + "-" + pad(dt.getMonth()+1) + "-" + pad(dt.getDate()); }
+function parseISO(s){ const p = s.split("-").map(Number); return new Date(p[0], p[1]-1, p[2]); }
+function addDays(dt, n){ const x = new Date(dt); x.setDate(x.getDate()+n); return x; }
+
+function loadConfig() {
+  let start = null, dur = null;
+  try {
+    start = localStorage.getItem("carte-debut");
+    dur = parseInt(localStorage.getItem("carte-duree"), 10);
+  } catch (e) {}
+  if (!start) start = toISO(new Date());
+  if (!dur || dur < 1) dur = 60;
+  dur = Math.min(dur, 365);
+  return { start, dur };
+}
+function saveConfig(cfg) {
+  try {
+    localStorage.setItem("carte-debut", cfg.start);
+    localStorage.setItem("carte-duree", String(cfg.dur));
+  } catch (e) {}
 }
 
-function getTodayIndex() {
-  const today = new Date();
-  const m = today.getMonth() + 1;
-  const d = today.getDate();
-  if (m === 6 && d >= 1 && d <= 30) return d - 1;
-  if (m === 7 && d >= 1 && d <= 31) return 29 + d;
-  return null;
+function loadTopics() {
+  try {
+    const raw = localStorage.getItem("carte-sujets");
+    if (raw) {
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr)) {
+        const valid = arr.filter(id => topics.some(t => t.id === id));
+        if (valid.length) return valid;
+      }
+    }
+  } catch (e) {}
+  return topics.map(t => t.id);
+}
+function saveTopics() {
+  try { localStorage.setItem("carte-sujets", JSON.stringify(selectedTopics)); } catch (e) {}
+}
+function buildPool() {
+  const ids = (selectedTopics && selectedTopics.length) ? selectedTopics : topics.map(t => t.id);
+  const chosen = topics.filter(t => ids.includes(t.id));
+  const pool = [];
+  const maxLen = Math.max.apply(null, chosen.map(t => t.phrases.length));
+  for (let k = 0; k < maxLen; k++) {
+    chosen.forEach(t => { if (k < t.phrases.length) pool.push({ topic: t.label, text: t.phrases[k] }); });
+  }
+  return pool;
 }
 
-function isDone(i) {
-  try { return localStorage.getItem("carte-jour-fait-" + i) === "1"; }
-  catch (e) { return false; }
+let config = loadConfig();
+let selectedTopics = loadTopics();
+let days = [];
+let todayIndex = null;
+let current = 0;
+
+function rebuild() {
+  const pool = buildPool();
+  const start = parseISO(config.start);
+  days = [];
+  for (let i = 0; i < config.dur; i++) {
+    const dt = addDays(start, i);
+    days.push({
+      i,
+      date: dt,
+      label: dt.getDate() + " " + moisFr[dt.getMonth()],
+      ex: exercices[i % exercices.length],
+      mot: motivations[i % motivations.length],
+      pensee: pool.length ? pool[i % pool.length] : { topic: "Motivation", text: "" }
+    });
+  }
+  const s0 = parseISO(config.start); s0.setHours(0,0,0,0);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((today - s0) / 86400000);
+  todayIndex = (diff >= 0 && diff < config.dur) ? diff : null;
+  current = todayIndex !== null ? todayIndex : 0;
 }
-function getMood(i) {
-  try { return localStorage.getItem("carte-jour-humeur-" + i) || ""; }
-  catch (e) { return ""; }
-}
 
-const todayIndex = getTodayIndex();
-let current = todayIndex !== null ? todayIndex : 0;
-
-try {
-  const params = new URLSearchParams(window.location.search);
-  const j = parseInt(params.get("jour"), 10);
-  if (!isNaN(j) && j >= 0 && j < 61) current = j;
-} catch (e) {}
-
-/* ===================== VUE CARTE ===================== */
 const elCard = document.getElementById("card");
+const elMedallion = document.getElementById("medallion");
 const elDate = document.getElementById("date-label");
 const elTitle = document.getElementById("title-label");
 const elBadge = document.getElementById("badge");
-const elIcon = document.getElementById("icon");
 const elExercise = document.getElementById("exercise");
 const elMotivation = document.getElementById("motivation");
 const elPensee = document.getElementById("pensee");
+const elPenseeLabel = document.getElementById("pensee-label");
 const elPenseeBox = document.getElementById("pensee-box");
+const elPenseeIcon = document.getElementById("pensee-icon");
 const elDoneBtn = document.getElementById("done-btn");
 const elOutsideNote = document.getElementById("outside-note");
 const elProgressLabel = document.getElementById("progress-label");
 const elProgressFill = document.getElementById("progress-fill");
-const elMoodFaces = document.getElementById("mood-faces");
-const elNoteInput = document.getElementById("note-input");
-const elNoteSaved = document.getElementById("note-saved");
+
+elPenseeIcon.innerHTML = heartSVG;
 
 function render(animate) {
   const d = days[current];
@@ -870,9 +793,13 @@ function render(animate) {
 
   elCard.style.background = illustration(d);
 
+  elMedallion.style.background = `radial-gradient(circle at 38% 30%, #ffffff 0%, ${v.med[0]} 55%, ${v.med[1]} 100%)`;
+  elMedallion.style.color = c.fg;
+  elMedallion.innerHTML = glyphSVG(d.ex.cat);
+
   elDate.textContent = (current === todayIndex) ? "Aujourd'hui" : d.label;
   elDate.style.color = v.text;
-  elTitle.textContent = (current === todayIndex) ? "Carte du jour" : d.label;
+  elTitle.textContent = "Carte du jour";
   elTitle.style.color = v.text;
 
   elBadge.textContent = c.label;
@@ -880,41 +807,44 @@ function render(animate) {
   elBadge.style.color = c.fg;
   elBadge.style.display = "inline-block";
 
-  elIcon.textContent = d.ex.icon;
   elExercise.textContent = d.ex.t;
   elMotivation.textContent = d.mot;
   elMotivation.style.display = "block";
-  elPensee.textContent = d.pensee;
+  elPensee.textContent = d.pensee.text;
+  elPenseeLabel.textContent = d.pensee.topic;
   elPenseeBox.style.display = "flex";
 
-  const isD = isDone(d.i);
-  elDoneBtn.textContent = isD ? "Fait, bravo !" : "Marquer comme fait";
-  elDoneBtn.classList.toggle("is-done", isD);
+  const key = "carte-jour-fait-" + d.i;
+  let isDone = false;
+  try { isDone = localStorage.getItem(key) === "1"; } catch (e) {}
+  elDoneBtn.textContent = isDone ? "Fait, bravo !" : "Marquer comme fait";
+  elDoneBtn.classList.toggle("is-done", isDone);
 
-  const savedMood = getMood(d.i);
-  elMoodFaces.querySelectorAll(".mood-face").forEach(f => {
-    f.classList.toggle("selected", f.dataset.mood === savedMood);
-  });
-
-  let savedNote = "";
-  try { savedNote = localStorage.getItem("carte-jour-note-" + d.i) || ""; } catch (e) {}
-  elNoteInput.value = savedNote;
-  elNoteSaved.classList.remove("show");
-
-  elOutsideNote.textContent = (todayIndex === null)
-    ? "Hors période juin-juillet : voici une carte à découvrir." : "";
+  const nb = days.length;
+  if (todayIndex === null) {
+    const fin = addDays(parseISO(config.start), config.dur - 1);
+    elOutsideNote.textContent = "Hors de ta période (du " + parseISO(config.start).getDate() + " " +
+      moisFr[parseISO(config.start).getMonth()] + " au " + fin.getDate() + " " + moisFr[fin.getMonth()] +
+      ") : voici une carte à découvrir.";
+  } else {
+    elOutsideNote.textContent = "Jour " + (current + 1) + " sur " + nb;
+  }
 
   let total = 0;
-  for (let j = 0; j < days.length; j++) { if (isDone(j)) total++; }
-  const pct = Math.round((total / days.length) * 100);
-  elProgressLabel.textContent = total + " / " + days.length + " jours réussis";
+  try {
+    for (let j = 0; j < nb; j++) {
+      if (localStorage.getItem("carte-jour-fait-" + j) === "1") total++;
+    }
+  } catch (e) {}
+  const pct = nb ? Math.round((total / nb) * 100) : 0;
+  elProgressLabel.textContent = total + " / " + nb + " jours réussis";
   elProgressFill.style.width = pct + "%";
 
-  if (animate && elCard.animate) {
-    [elIcon, elTitle, elExercise].forEach((el, k) => {
+  if (animate && elMedallion.animate) {
+    [elMedallion, elTitle, elExercise].forEach((el, k) => {
       el.animate(
         [{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "translateY(0)" }],
-        { duration: 420, delay: k * 60, easing: "ease-out" }
+        { duration: 440, delay: k * 70, easing: "ease-out" }
       );
     });
   }
@@ -923,36 +853,11 @@ function render(animate) {
 elDoneBtn.addEventListener("click", () => {
   const key = "carte-jour-fait-" + days[current].i;
   try {
-    if (localStorage.getItem(key) === "1") localStorage.removeItem(key);
+    const isDone = localStorage.getItem(key) === "1";
+    if (isDone) localStorage.removeItem(key);
     else localStorage.setItem(key, "1");
   } catch (e) {}
   render(false);
-});
-
-elMoodFaces.addEventListener("click", (e) => {
-  const face = e.target.closest(".mood-face");
-  if (!face) return;
-  const val = face.dataset.mood;
-  const key = "carte-jour-humeur-" + days[current].i;
-  let curMood = "";
-  try { curMood = localStorage.getItem(key) || ""; } catch (err) {}
-  try {
-    if (curMood === val) localStorage.removeItem(key);
-    else localStorage.setItem(key, val);
-  } catch (err) {}
-  render(false);
-});
-
-let noteTimer = null;
-elNoteInput.addEventListener("input", () => {
-  const key = "carte-jour-note-" + days[current].i;
-  try {
-    if (elNoteInput.value.trim() === "") localStorage.removeItem(key);
-    else localStorage.setItem(key, elNoteInput.value);
-  } catch (err) {}
-  elNoteSaved.classList.add("show");
-  clearTimeout(noteTimer);
-  noteTimer = setTimeout(() => elNoteSaved.classList.remove("show"), 1400);
 });
 
 document.getElementById("prev-btn").addEventListener("click", () => {
@@ -964,188 +869,81 @@ document.getElementById("next-btn").addEventListener("click", () => {
   render(true);
 });
 
-/* ===================== VUE RÉCAP ===================== */
-const ringFill = document.getElementById("ring-fill");
-const circ = 314;
+/* ---------- Réglages ---------- */
+const elSettings = document.getElementById("settings");
+const elGear = document.getElementById("gear");
+const elStartInput = document.getElementById("start-input");
+const elDurInput = document.getElementById("dur-input");
+const durOptions = document.getElementById("dur-options");
+let pendingDur = config.dur;
+let pendingTopics = new Set(selectedTopics);
+const chipsEl = document.getElementById("topic-chips");
 
-function renderRecap() {
-  let total = 0;
-  days.forEach(d => { if (isDone(d.i)) total++; });
-  const pct = Math.round((total / days.length) * 100);
-
-  ringFill.style.transition = "none";
-  ringFill.style.strokeDashoffset = circ;
-  // forcer un reflow puis animer
-  void ringFill.getBoundingClientRect();
-  setTimeout(() => {
-    ringFill.style.transition = "stroke-dashoffset 1s ease";
-    ringFill.style.strokeDashoffset = circ - (circ * pct / 100);
-  }, 60);
-
-  document.getElementById("ring-pct").textContent = pct + "%";
-  document.getElementById("ring-sub").textContent = total + " / " + days.length;
-
-  const ringTitle = document.getElementById("ring-title");
-  const ringMsg = document.getElementById("ring-msg");
-  if (total === 0) {
-    ringTitle.textContent = "On commence ?";
-    ringMsg.textContent = "Aucun jour coché pour l'instant. Choisis ta carte du jour et lance-toi !";
-  } else if (pct < 34) {
-    ringTitle.textContent = "Beau début !";
-    ringMsg.textContent = "Tu as posé les premières pierres. La régularité fait tout, continue.";
-  } else if (pct < 67) {
-    ringTitle.textContent = "Tu tiens le rythme !";
-    ringMsg.textContent = "Déjà plus d'un tiers du chemin. Ton corps et ta tête te disent merci.";
-  } else if (pct < 100) {
-    ringTitle.textContent = "Presque au bout !";
-    ringMsg.textContent = "Quelle constance ! La ligne d'arrivée est toute proche, accroche-toi.";
-  } else {
-    ringTitle.textContent = "Objectif atteint ! 🎉";
-    ringMsg.textContent = "61 jours, bravo. Tu peux être profondément fière de toi.";
-  }
-
-  // Série
-  let streak = 0;
-  let startIdx = (todayIndex !== null) ? todayIndex : days.length - 1;
-  if (todayIndex !== null && !isDone(todayIndex)) startIdx = todayIndex - 1;
-  for (let i = startIdx; i >= 0; i--) {
-    if (isDone(i)) streak++;
-    else break;
-  }
-  const streakEl = document.getElementById("streak");
-  if (streak >= 2) {
-    streakEl.style.display = "flex";
-    document.getElementById("streak-num").textContent = streak;
-    document.getElementById("streak-label").textContent = "jours d'affilée, continue comme ça !";
-  } else {
-    streakEl.style.display = "none";
-  }
-
-  // Stats par catégorie
-  const catTotals = { cardio:[0,0], force:[0,0], souplesse:[0,0], plaisir:[0,0] };
-  days.forEach(d => {
-    catTotals[d.ex.cat][1]++;
-    if (isDone(d.i)) catTotals[d.ex.cat][0]++;
-  });
-  const statsEl = document.getElementById("stats");
-  statsEl.innerHTML = "";
-  ["cardio","force","souplesse","plaisir"].forEach(cat => {
-    const c = catInfo[cat];
-    const [done, tot] = catTotals[cat];
-    const div = document.createElement("div");
-    div.className = "stat";
-    div.style.background = c.bg;
-    div.innerHTML =
-      '<div class="stat-top">' +
-        '<span class="stat-icon">' + c.icon + '</span>' +
-        '<span class="stat-label" style="color:' + c.fg + '">' + c.label + '</span>' +
-      '</div>' +
-      '<div class="stat-count" style="color:' + c.fg + '">' + done +
-        '<span class="stat-of"> / ' + tot + '</span></div>';
-    statsEl.appendChild(div);
-  });
-
-  // Calendrier
-  const monthsData = [
-    { name: "Juin", year: 2025, m: 6, count: 30, offset: 0 },
-    { name: "Juillet", year: 2025, m: 7, count: 31, offset: 30 }
-  ];
-  const dows = ["L","M","M","J","V","S","D"];
-  const calEl = document.getElementById("calendar");
-  calEl.innerHTML = "";
-
-  monthsData.forEach(mo => {
-    const monthDiv = document.createElement("div");
-    monthDiv.className = "month";
-    const title = document.createElement("div");
-    title.className = "month-title";
-    title.textContent = mo.name;
-    monthDiv.appendChild(title);
-
-    const grid = document.createElement("div");
-    grid.className = "grid";
-
-    dows.forEach(d => {
-      const dd = document.createElement("div");
-      dd.className = "dow";
-      dd.textContent = d;
-      grid.appendChild(dd);
-    });
-
-    const first = new Date(mo.year, mo.m - 1, 1).getDay();
-    const lead = (first + 6) % 7;
-    for (let k = 0; k < lead; k++) {
-      const e = document.createElement("div");
-      e.className = "cell empty";
-      grid.appendChild(e);
-    }
-
-    for (let dnum = 1; dnum <= mo.count; dnum++) {
-      const idx = mo.offset + (dnum - 1);
-      const day = days[idx];
-      const cell = document.createElement("div");
-      cell.className = "cell";
-      cell.innerHTML = '<span>' + dnum + '</span>';
-      if (isDone(idx)) {
-        cell.classList.add("done");
-        cell.style.background = catInfo[day.ex.cat].color;
-        cell.insertAdjacentHTML("beforeend", '<span class="check">✓</span>');
+function renderChips() {
+  chipsEl.innerHTML = "";
+  topics.forEach(t => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = t.label;
+    b.className = pendingTopics.has(t.id) ? "active" : "";
+    b.addEventListener("click", () => {
+      if (pendingTopics.has(t.id)) {
+        if (pendingTopics.size > 1) pendingTopics.delete(t.id);
       } else {
-        cell.classList.add("notdone");
+        pendingTopics.add(t.id);
       }
-      const mood = getMood(idx);
-      if (mood) cell.insertAdjacentHTML("beforeend", '<span class="mood-dot">' + moodEmoji[mood] + '</span>');
-      if (idx === todayIndex) cell.classList.add("today");
-      cell.addEventListener("click", () => showCard(idx));
-      grid.appendChild(cell);
-    }
-
-    monthDiv.appendChild(grid);
-    calEl.appendChild(monthDiv);
+      renderChips();
+    });
+    chipsEl.appendChild(b);
   });
-
-  // Légende
-  const legendEl = document.getElementById("legend");
-  legendEl.innerHTML = "";
-  ["cardio","force","souplesse","plaisir"].forEach(cat => {
-    const c = catInfo[cat];
-    const item = document.createElement("div");
-    item.className = "legend-item";
-    item.innerHTML = '<span class="dot" style="background:' + c.color + '"></span>' + c.label;
-    legendEl.appendChild(item);
-  });
-
-  // Note si vide
-  const emptyNote = document.getElementById("empty-note");
-  if (total === 0) {
-    emptyNote.style.display = "block";
-    emptyNote.textContent = "Astuce : les jours que tu coches apparaîtront ici en couleur, avec ton humeur.";
-  } else {
-    emptyNote.style.display = "none";
-  }
 }
 
-/* ===================== BASCULE ENTRE LES VUES ===================== */
-const viewCard = document.getElementById("view-card");
-const viewRecap = document.getElementById("view-recap");
-
-function showRecap() {
-  viewCard.style.display = "none";
-  viewRecap.style.display = "flex";
-  renderRecap();
-  window.scrollTo(0, 0);
+function syncDurUI(val) {
+  pendingDur = val;
+  elDurInput.value = val;
+  durOptions.querySelectorAll("button").forEach(b => {
+    b.classList.toggle("active", parseInt(b.dataset.d, 10) === val);
+  });
 }
-function showCard(idx) {
-  if (typeof idx === "number") current = idx;
-  viewRecap.style.display = "none";
-  viewCard.style.display = "flex";
+
+function openSettings() {
+  elStartInput.value = config.start;
+  syncDurUI(config.dur);
+  pendingTopics = new Set(selectedTopics);
+  renderChips();
+  elSettings.classList.add("open");
+}
+function closeSettings() { elSettings.classList.remove("open"); }
+
+elGear.addEventListener("click", openSettings);
+document.getElementById("settings-cancel").addEventListener("click", closeSettings);
+elSettings.addEventListener("click", (e) => { if (e.target === elSettings) closeSettings(); });
+
+durOptions.querySelectorAll("button").forEach(b => {
+  b.addEventListener("click", () => syncDurUI(parseInt(b.dataset.d, 10)));
+});
+elDurInput.addEventListener("input", () => {
+  let val = parseInt(elDurInput.value, 10);
+  if (!val || val < 1) return;
+  val = Math.min(val, 365);
+  syncDurUI(val);
+});
+
+document.getElementById("settings-save").addEventListener("click", () => {
+  let dur = parseInt(elDurInput.value, 10);
+  if (!dur || dur < 1) dur = pendingDur;
+  dur = Math.min(Math.max(dur, 1), 365);
+  const start = elStartInput.value || config.start;
+  config = { start, dur };
+  saveConfig(config);
+  selectedTopics = pendingTopics.size ? Array.from(pendingTopics) : topics.map(t => t.id);
+  saveTopics();
+  rebuild();
+  closeSettings();
   render(true);
-  window.scrollTo(0, 0);
-}
+});
 
-document.getElementById("to-recap").addEventListener("click", showRecap);
-document.getElementById("to-card").addEventListener("click", () => showCard());
-
+rebuild();
 render(true);
 </script>
 </body>
