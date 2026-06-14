@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carte du jour</title>
+<title>Ma motivation du jour</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Quicksand:wght@500;600;700&display=swap');
 
@@ -14,12 +14,19 @@
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #FDEFF4 0%, #EDF2FB 50%, #ECF6EE 100%);
+  }
+
+  .view {
+    min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     padding: 24px;
   }
 
+  .view-card { align-items: center; }
+  .view-recap { align-items: flex-start; padding: 28px 20px 40px; }
+
+  /* ====================== CARTE DU JOUR ====================== */
   .card {
     position: relative;
     overflow: hidden;
@@ -32,7 +39,6 @@
     transition: background 0.5s ease;
   }
 
-  /* ---------- Illustration : zone héros ---------- */
   .hero {
     position: relative;
     height: 138px;
@@ -75,7 +81,6 @@
     box-shadow: 0 4px 10px rgba(120, 100, 140, 0.14);
   }
 
-  /* ---------- En-tête (sur l'illustration) ---------- */
   .head {
     position: relative;
     text-align: center;
@@ -98,7 +103,6 @@
     margin: 0;
   }
 
-  /* ---------- Panneau givré (texte par-dessus) ---------- */
   .panel {
     position: relative;
     background: rgba(255, 255, 255, 0.66);
@@ -159,6 +163,99 @@
     line-height: 1.6;
   }
 
+  .mood {
+    margin-top: 14px;
+    background: rgba(255, 255, 255, 0.58);
+    border-radius: 16px;
+    padding: 13px 14px 14px;
+    text-align: center;
+  }
+
+  .mood-label {
+    font-size: 11px;
+    color: #B58E9A;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .mood-faces {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .mood-face {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 14px;
+    padding: 8px 0;
+    font-size: 24px;
+    line-height: 1;
+    filter: grayscale(0.55);
+    opacity: 0.65;
+    transition: transform 0.12s ease, opacity 0.15s ease, filter 0.15s ease, background 0.15s ease;
+  }
+
+  .mood-face:hover { transform: translateY(-2px); opacity: 0.9; }
+
+  .mood-face.selected {
+    filter: grayscale(0);
+    opacity: 1;
+    background: #FFF;
+    transform: translateY(-2px) scale(1.06);
+    box-shadow: 0 5px 12px rgba(120, 110, 150, 0.2);
+  }
+
+  .note-box {
+    margin-top: 12px;
+    background: rgba(255, 255, 255, 0.58);
+    border-radius: 16px;
+    padding: 13px 14px 14px;
+    text-align: left;
+    position: relative;
+  }
+
+  .note-label {
+    font-size: 11px;
+    color: #B58E9A;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .note-input {
+    width: 100%;
+    border: none;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #5E5277;
+    resize: vertical;
+    min-height: 44px;
+    line-height: 1.5;
+    outline: none;
+    transition: box-shadow 0.15s ease;
+  }
+
+  .note-input::placeholder { color: #BBB1CC; }
+  .note-input:focus { box-shadow: 0 0 0 2px rgba(168, 221, 192, 0.7); }
+
+  .note-saved {
+    font-size: 11px;
+    color: #5E9C6E;
+    margin-top: 6px;
+    height: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .note-saved.show { opacity: 1; }
+
   .actions {
     margin-top: 20px;
     display: flex;
@@ -208,6 +305,23 @@
     line-height: 1.4;
   }
 
+  .recap-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #9A8FB5;
+    text-decoration: none;
+    padding: 11px 9px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    transition: background 0.2s ease;
+  }
+
+  .recap-link:hover { background: rgba(255, 255, 255, 0.85); }
+
   .progress-wrap { margin-top: 16px; }
 
   .progress-label {
@@ -231,41 +345,326 @@
     border-radius: 10px;
     transition: width 0.4s ease;
   }
+
+  /* ====================== RÉCAP ====================== */
+  .wrap { max-width: 440px; width: 100%; }
+
+  .rheader { text-align: center; margin-bottom: 22px; }
+
+  .rheader .kicker {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #B58E9A;
+    margin-bottom: 4px;
+  }
+
+  .rheader h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    color: #5E5277;
+    margin: 0;
+  }
+
+  .ring-card {
+    background: rgba(255, 255, 255, 0.66);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 26px;
+    padding: 24px 22px;
+    box-shadow: 0 12px 30px rgba(120, 110, 150, 0.14);
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 18px;
+  }
+
+  .ring { position: relative; flex-shrink: 0; width: 116px; height: 116px; }
+  .ring svg { transform: rotate(-90deg); }
+
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ring-pct {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #5E9C6E;
+    line-height: 1;
+  }
+
+  .ring-sub { font-size: 11px; color: #9A92B5; margin-top: 2px; }
+
+  .ring-text h2 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #5E5277;
+    margin: 0 0 6px;
+  }
+
+  .ring-text p { font-size: 13.5px; color: #8A7F9E; line-height: 1.5; margin: 0; }
+
+  .streak {
+    background: linear-gradient(135deg, #FFE7CF, #FFD3B6);
+    border-radius: 22px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 20px rgba(220, 160, 120, 0.22);
+  }
+
+  .streak-icon { font-size: 32px; }
+
+  .streak-num {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #B5683C;
+    line-height: 1;
+  }
+
+  .streak-label { font-size: 13px; color: #9C6B4C; margin-top: 3px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .stat { border-radius: 20px; padding: 15px 16px; box-shadow: 0 6px 16px rgba(120, 110, 150, 0.1); }
+
+  .stat-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .stat-icon { font-size: 19px; }
+
+  .stat-label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .stat-count {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .stat-of { font-size: 12px; opacity: 0.7; font-weight: 500; }
+
+  .month { margin-bottom: 20px; }
+
+  .month-title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #5E5277;
+    margin: 0 0 12px;
+    padding-left: 4px;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 7px; }
+
+  .dow {
+    text-align: center;
+    font-size: 10.5px;
+    color: #B0A6C4;
+    font-weight: 500;
+    padding-bottom: 2px;
+  }
+
+  .cell {
+    aspect-ratio: 1;
+    border-radius: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #A99FBC;
+    background: rgba(255, 255, 255, 0.55);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cell:not(.empty):hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 7px 16px rgba(120, 110, 150, 0.22);
+  }
+
+  .cell.empty { background: transparent; box-shadow: none; cursor: default; }
+
+  .cell.done { color: #fff; font-weight: 600; box-shadow: 0 5px 12px rgba(120, 160, 130, 0.28); }
+
+  .cell .mood-dot {
+    position: absolute;
+    bottom: 2px;
+    font-size: 9px;
+    line-height: 1;
+  }
+
+  .cell.done .check {
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    font-size: 8px;
+    opacity: 0.95;
+  }
+
+  .cell.today { outline: 2.5px solid #FFFFFF; outline-offset: -2.5px; }
+  .cell.today.notdone { box-shadow: 0 0 0 2px #E7B7C6; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8A7F9E; }
+  .dot { width: 13px; height: 13px; border-radius: 5px; }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    border-radius: 20px;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.8);
+    color: #7C6A99;
+    box-shadow: 0 4px 12px rgba(120, 110, 150, 0.14);
+    transition: transform 0.1s ease, background 0.2s ease;
+  }
+
+  .btn:hover { background: #fff; }
+  .btn:active { transform: scale(0.97); }
+
+  .empty-note {
+    text-align: center;
+    font-size: 13.5px;
+    color: #9C8FB8;
+    line-height: 1.6;
+    padding: 8px 10px 16px;
+  }
 </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <div class="hero">
-      <div class="halo"></div>
-      <div class="icon" id="icon">🌷</div>
-      <span class="badge" id="badge" style="display:none;"></span>
+  <!-- ===================== VUE : CARTE DU JOUR ===================== -->
+  <div class="view view-card" id="view-card">
+    <div class="card" id="card">
+      <div class="hero">
+        <div class="halo"></div>
+        <div class="icon" id="icon">🌷</div>
+        <span class="badge" id="badge" style="display:none;"></span>
+      </div>
+      <div class="head">
+        <div class="date" id="date-label">Astuce</div>
+        <h1 class="title" id="title-label">Ouvre-moi dans Safari 🌷</h1>
+      </div>
+      <div class="panel">
+        <div class="exercise" id="exercise">Pour afficher la carte du jour, ouvre ce fichier dans Safari (ou un autre navigateur) plutôt qu'en aperçu rapide.</div>
+        <div class="motivation" id="motivation" style="display:none;"></div>
+        <div class="pensee-box" id="pensee-box" style="display:none;">
+          <span class="pensee-icon">💛</span>
+          <div>
+            <div class="pensee-label">Pensée du jour</div>
+            <div class="pensee-text" id="pensee"></div>
+          </div>
+        </div>
+        <div class="mood" id="mood-box">
+          <div class="mood-label">Comment je me sens aujourd'hui ?</div>
+          <div class="mood-faces" id="mood-faces">
+            <button class="mood-face" data-mood="1" title="Difficile">😟</button>
+            <button class="mood-face" data-mood="2" title="Bof">😕</button>
+            <button class="mood-face" data-mood="3" title="Ça va">😐</button>
+            <button class="mood-face" data-mood="4" title="Bien">🙂</button>
+            <button class="mood-face" data-mood="5" title="Au top">😄</button>
+          </div>
+        </div>
+        <div class="note-box">
+          <div class="note-label">Mon mot du jour</div>
+          <textarea id="note-input" class="note-input" rows="2" placeholder="Écris ici une pensée, un ressenti, une victoire…"></textarea>
+          <div class="note-saved" id="note-saved">Enregistré ✓</div>
+        </div>
+        <div class="actions">
+          <button class="nav-btn" id="prev-btn">‹</button>
+          <button class="done-btn" id="done-btn">Marquer comme fait</button>
+          <button class="nav-btn" id="next-btn">›</button>
+        </div>
+        <div class="outside-note" id="outside-note"></div>
+        <div class="progress-wrap">
+          <div class="progress-label" id="progress-label"></div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+        <button class="recap-link" id="to-recap">Voir mon récap 🌸</button>
+      </div>
     </div>
-    <div class="head">
-      <div class="date" id="date-label">Astuce</div>
-      <h1 class="title" id="title-label">Ouvre-moi dans Safari 🌷</h1>
-    </div>
-    <div class="panel">
-      <div class="exercise" id="exercise">Pour afficher la carte du jour, ouvre ce fichier dans Safari (ou un autre navigateur) plutôt qu'en aperçu rapide.</div>
-      <div class="motivation" id="motivation" style="display:none;"></div>
-      <div class="pensee-box" id="pensee-box" style="display:none;">
-        <span class="pensee-icon">💛</span>
-        <div>
-          <div class="pensee-label">Pensée du jour</div>
-          <div class="pensee-text" id="pensee"></div>
+  </div>
+
+  <!-- ===================== VUE : RÉCAP ===================== -->
+  <div class="view view-recap" id="view-recap" style="display:none;">
+    <div class="wrap">
+      <div class="rheader">
+        <div class="kicker">Juin – Juillet</div>
+        <h1>Mon récap 🌸</h1>
+      </div>
+
+      <div class="ring-card">
+        <div class="ring">
+          <svg width="116" height="116" viewBox="0 0 116 116">
+            <circle cx="58" cy="58" r="50" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="11"></circle>
+            <circle id="ring-fill" cx="58" cy="58" r="50" fill="none" stroke="url(#grad)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"></circle>
+            <defs>
+              <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#A8DDC0"></stop>
+                <stop offset="100%" stop-color="#84CBA6"></stop>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct" id="ring-pct">0%</div>
+            <div class="ring-sub" id="ring-sub">0 / 61</div>
+          </div>
+        </div>
+        <div class="ring-text">
+          <h2 id="ring-title">En route !</h2>
+          <p id="ring-msg">Chaque jour coché te rapproche de ton objectif.</p>
         </div>
       </div>
-      <div class="actions">
-        <button class="nav-btn" id="prev-btn">‹</button>
-        <button class="done-btn" id="done-btn">Marquer comme fait</button>
-        <button class="nav-btn" id="next-btn">›</button>
-      </div>
-      <div class="outside-note" id="outside-note"></div>
-      <div class="progress-wrap">
-        <div class="progress-label" id="progress-label"></div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
+
+      <div class="streak" id="streak" style="display:none;">
+        <div class="streak-icon">🔥</div>
+        <div class="streak-text">
+          <div class="streak-num" id="streak-num">0</div>
+          <div class="streak-label" id="streak-label">jours d'affilée</div>
         </div>
       </div>
+
+      <div class="stats" id="stats"></div>
+      <div id="calendar"></div>
+      <div class="legend" id="legend"></div>
+      <button class="btn" id="to-card">← Retour à la carte du jour</button>
+      <div class="empty-note" id="empty-note" style="display:none;"></div>
     </div>
   </div>
 
@@ -377,19 +776,20 @@ const pensees = [
 ];
 
 const catInfo = {
-  cardio:    { label: "Cardio",      bg: "#FFE0CE", fg: "#C97B5A" },
-  force:     { label: "Force douce", bg: "#FBEEC0", fg: "#B89126" },
-  souplesse: { label: "Souplesse",   bg: "#D8E9FA", fg: "#5588B5" },
-  plaisir:   { label: "Plaisir",     bg: "#DCF0DF", fg: "#5E9C6E" }
+  cardio:    { label: "Cardio",      bg: "#FFE0CE", fg: "#C97B5A", icon: "🚶", color: "#F0A87E" },
+  force:     { label: "Force douce", bg: "#FBEEC0", fg: "#B89126", icon: "💪", color: "#E6C566" },
+  souplesse: { label: "Souplesse",   bg: "#D8E9FA", fg: "#5588B5", icon: "🧘", color: "#7FB0DC" },
+  plaisir:   { label: "Plaisir",     bg: "#DCF0DF", fg: "#5E9C6E", icon: "💃", color: "#84C695" }
 };
 
-// Palettes pastel par catégorie pour les illustrations de fond
 const catVisual = {
   cardio:    { colors: ["#FFEEE0", "#FFD7C2", "#FFC0A4"], glow: "#FFB495", text: "#A85B3C" },
   force:     { colors: ["#FFF7DE", "#FBEBBC", "#F6DD9C"], glow: "#F1D079", text: "#9F7D22" },
   souplesse: { colors: ["#EAF2FC", "#D5E6F8", "#BFD8F3"], glow: "#A8CCEF", text: "#3F6F9C" },
   plaisir:   { colors: ["#EBF7ED", "#D6EFDA", "#C0E6C7"], glow: "#A7DCB2", text: "#3F7C53" }
 };
+
+const moodEmoji = { "1":"😟", "2":"😕", "3":"😐", "4":"🙂", "5":"😄" };
 
 function illustration(d) {
   const v = catVisual[d.ex.cat];
@@ -427,9 +827,25 @@ function getTodayIndex() {
   return null;
 }
 
+function isDone(i) {
+  try { return localStorage.getItem("carte-jour-fait-" + i) === "1"; }
+  catch (e) { return false; }
+}
+function getMood(i) {
+  try { return localStorage.getItem("carte-jour-humeur-" + i) || ""; }
+  catch (e) { return ""; }
+}
+
 const todayIndex = getTodayIndex();
 let current = todayIndex !== null ? todayIndex : 0;
 
+try {
+  const params = new URLSearchParams(window.location.search);
+  const j = parseInt(params.get("jour"), 10);
+  if (!isNaN(j) && j >= 0 && j < 61) current = j;
+} catch (e) {}
+
+/* ===================== VUE CARTE ===================== */
 const elCard = document.getElementById("card");
 const elDate = document.getElementById("date-label");
 const elTitle = document.getElementById("title-label");
@@ -443,6 +859,9 @@ const elDoneBtn = document.getElementById("done-btn");
 const elOutsideNote = document.getElementById("outside-note");
 const elProgressLabel = document.getElementById("progress-label");
 const elProgressFill = document.getElementById("progress-fill");
+const elMoodFaces = document.getElementById("mood-faces");
+const elNoteInput = document.getElementById("note-input");
+const elNoteSaved = document.getElementById("note-saved");
 
 function render(animate) {
   const d = days[current];
@@ -468,24 +887,25 @@ function render(animate) {
   elPensee.textContent = d.pensee;
   elPenseeBox.style.display = "flex";
 
-  const key = "carte-jour-fait-" + d.i;
-  let isDone = false;
-  try { isDone = localStorage.getItem(key) === "1"; } catch (e) {}
-  elDoneBtn.textContent = isDone ? "Fait, bravo !" : "Marquer comme fait";
-  elDoneBtn.classList.toggle("is-done", isDone);
+  const isD = isDone(d.i);
+  elDoneBtn.textContent = isD ? "Fait, bravo !" : "Marquer comme fait";
+  elDoneBtn.classList.toggle("is-done", isD);
 
-  if (todayIndex === null) {
-    elOutsideNote.textContent = "Hors période juin-juillet : voici une carte à découvrir.";
-  } else {
-    elOutsideNote.textContent = "";
-  }
+  const savedMood = getMood(d.i);
+  elMoodFaces.querySelectorAll(".mood-face").forEach(f => {
+    f.classList.toggle("selected", f.dataset.mood === savedMood);
+  });
+
+  let savedNote = "";
+  try { savedNote = localStorage.getItem("carte-jour-note-" + d.i) || ""; } catch (e) {}
+  elNoteInput.value = savedNote;
+  elNoteSaved.classList.remove("show");
+
+  elOutsideNote.textContent = (todayIndex === null)
+    ? "Hors période juin-juillet : voici une carte à découvrir." : "";
 
   let total = 0;
-  try {
-    for (let j = 0; j < days.length; j++) {
-      if (localStorage.getItem("carte-jour-fait-" + j) === "1") total++;
-    }
-  } catch (e) {}
+  for (let j = 0; j < days.length; j++) { if (isDone(j)) total++; }
   const pct = Math.round((total / days.length) * 100);
   elProgressLabel.textContent = total + " / " + days.length + " jours réussis";
   elProgressFill.style.width = pct + "%";
@@ -503,22 +923,228 @@ function render(animate) {
 elDoneBtn.addEventListener("click", () => {
   const key = "carte-jour-fait-" + days[current].i;
   try {
-    const isDone = localStorage.getItem(key) === "1";
-    if (isDone) localStorage.removeItem(key);
+    if (localStorage.getItem(key) === "1") localStorage.removeItem(key);
     else localStorage.setItem(key, "1");
   } catch (e) {}
   render(false);
+});
+
+elMoodFaces.addEventListener("click", (e) => {
+  const face = e.target.closest(".mood-face");
+  if (!face) return;
+  const val = face.dataset.mood;
+  const key = "carte-jour-humeur-" + days[current].i;
+  let curMood = "";
+  try { curMood = localStorage.getItem(key) || ""; } catch (err) {}
+  try {
+    if (curMood === val) localStorage.removeItem(key);
+    else localStorage.setItem(key, val);
+  } catch (err) {}
+  render(false);
+});
+
+let noteTimer = null;
+elNoteInput.addEventListener("input", () => {
+  const key = "carte-jour-note-" + days[current].i;
+  try {
+    if (elNoteInput.value.trim() === "") localStorage.removeItem(key);
+    else localStorage.setItem(key, elNoteInput.value);
+  } catch (err) {}
+  elNoteSaved.classList.add("show");
+  clearTimeout(noteTimer);
+  noteTimer = setTimeout(() => elNoteSaved.classList.remove("show"), 1400);
 });
 
 document.getElementById("prev-btn").addEventListener("click", () => {
   current = (current - 1 + days.length) % days.length;
   render(true);
 });
-
 document.getElementById("next-btn").addEventListener("click", () => {
   current = (current + 1) % days.length;
   render(true);
 });
+
+/* ===================== VUE RÉCAP ===================== */
+const ringFill = document.getElementById("ring-fill");
+const circ = 314;
+
+function renderRecap() {
+  let total = 0;
+  days.forEach(d => { if (isDone(d.i)) total++; });
+  const pct = Math.round((total / days.length) * 100);
+
+  ringFill.style.transition = "none";
+  ringFill.style.strokeDashoffset = circ;
+  // forcer un reflow puis animer
+  void ringFill.getBoundingClientRect();
+  setTimeout(() => {
+    ringFill.style.transition = "stroke-dashoffset 1s ease";
+    ringFill.style.strokeDashoffset = circ - (circ * pct / 100);
+  }, 60);
+
+  document.getElementById("ring-pct").textContent = pct + "%";
+  document.getElementById("ring-sub").textContent = total + " / " + days.length;
+
+  const ringTitle = document.getElementById("ring-title");
+  const ringMsg = document.getElementById("ring-msg");
+  if (total === 0) {
+    ringTitle.textContent = "On commence ?";
+    ringMsg.textContent = "Aucun jour coché pour l'instant. Choisis ta carte du jour et lance-toi !";
+  } else if (pct < 34) {
+    ringTitle.textContent = "Beau début !";
+    ringMsg.textContent = "Tu as posé les premières pierres. La régularité fait tout, continue.";
+  } else if (pct < 67) {
+    ringTitle.textContent = "Tu tiens le rythme !";
+    ringMsg.textContent = "Déjà plus d'un tiers du chemin. Ton corps et ta tête te disent merci.";
+  } else if (pct < 100) {
+    ringTitle.textContent = "Presque au bout !";
+    ringMsg.textContent = "Quelle constance ! La ligne d'arrivée est toute proche, accroche-toi.";
+  } else {
+    ringTitle.textContent = "Objectif atteint ! 🎉";
+    ringMsg.textContent = "61 jours, bravo. Tu peux être profondément fière de toi.";
+  }
+
+  // Série
+  let streak = 0;
+  let startIdx = (todayIndex !== null) ? todayIndex : days.length - 1;
+  if (todayIndex !== null && !isDone(todayIndex)) startIdx = todayIndex - 1;
+  for (let i = startIdx; i >= 0; i--) {
+    if (isDone(i)) streak++;
+    else break;
+  }
+  const streakEl = document.getElementById("streak");
+  if (streak >= 2) {
+    streakEl.style.display = "flex";
+    document.getElementById("streak-num").textContent = streak;
+    document.getElementById("streak-label").textContent = "jours d'affilée, continue comme ça !";
+  } else {
+    streakEl.style.display = "none";
+  }
+
+  // Stats par catégorie
+  const catTotals = { cardio:[0,0], force:[0,0], souplesse:[0,0], plaisir:[0,0] };
+  days.forEach(d => {
+    catTotals[d.ex.cat][1]++;
+    if (isDone(d.i)) catTotals[d.ex.cat][0]++;
+  });
+  const statsEl = document.getElementById("stats");
+  statsEl.innerHTML = "";
+  ["cardio","force","souplesse","plaisir"].forEach(cat => {
+    const c = catInfo[cat];
+    const [done, tot] = catTotals[cat];
+    const div = document.createElement("div");
+    div.className = "stat";
+    div.style.background = c.bg;
+    div.innerHTML =
+      '<div class="stat-top">' +
+        '<span class="stat-icon">' + c.icon + '</span>' +
+        '<span class="stat-label" style="color:' + c.fg + '">' + c.label + '</span>' +
+      '</div>' +
+      '<div class="stat-count" style="color:' + c.fg + '">' + done +
+        '<span class="stat-of"> / ' + tot + '</span></div>';
+    statsEl.appendChild(div);
+  });
+
+  // Calendrier
+  const monthsData = [
+    { name: "Juin", year: 2025, m: 6, count: 30, offset: 0 },
+    { name: "Juillet", year: 2025, m: 7, count: 31, offset: 30 }
+  ];
+  const dows = ["L","M","M","J","V","S","D"];
+  const calEl = document.getElementById("calendar");
+  calEl.innerHTML = "";
+
+  monthsData.forEach(mo => {
+    const monthDiv = document.createElement("div");
+    monthDiv.className = "month";
+    const title = document.createElement("div");
+    title.className = "month-title";
+    title.textContent = mo.name;
+    monthDiv.appendChild(title);
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+
+    dows.forEach(d => {
+      const dd = document.createElement("div");
+      dd.className = "dow";
+      dd.textContent = d;
+      grid.appendChild(dd);
+    });
+
+    const first = new Date(mo.year, mo.m - 1, 1).getDay();
+    const lead = (first + 6) % 7;
+    for (let k = 0; k < lead; k++) {
+      const e = document.createElement("div");
+      e.className = "cell empty";
+      grid.appendChild(e);
+    }
+
+    for (let dnum = 1; dnum <= mo.count; dnum++) {
+      const idx = mo.offset + (dnum - 1);
+      const day = days[idx];
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.innerHTML = '<span>' + dnum + '</span>';
+      if (isDone(idx)) {
+        cell.classList.add("done");
+        cell.style.background = catInfo[day.ex.cat].color;
+        cell.insertAdjacentHTML("beforeend", '<span class="check">✓</span>');
+      } else {
+        cell.classList.add("notdone");
+      }
+      const mood = getMood(idx);
+      if (mood) cell.insertAdjacentHTML("beforeend", '<span class="mood-dot">' + moodEmoji[mood] + '</span>');
+      if (idx === todayIndex) cell.classList.add("today");
+      cell.addEventListener("click", () => showCard(idx));
+      grid.appendChild(cell);
+    }
+
+    monthDiv.appendChild(grid);
+    calEl.appendChild(monthDiv);
+  });
+
+  // Légende
+  const legendEl = document.getElementById("legend");
+  legendEl.innerHTML = "";
+  ["cardio","force","souplesse","plaisir"].forEach(cat => {
+    const c = catInfo[cat];
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    item.innerHTML = '<span class="dot" style="background:' + c.color + '"></span>' + c.label;
+    legendEl.appendChild(item);
+  });
+
+  // Note si vide
+  const emptyNote = document.getElementById("empty-note");
+  if (total === 0) {
+    emptyNote.style.display = "block";
+    emptyNote.textContent = "Astuce : les jours que tu coches apparaîtront ici en couleur, avec ton humeur.";
+  } else {
+    emptyNote.style.display = "none";
+  }
+}
+
+/* ===================== BASCULE ENTRE LES VUES ===================== */
+const viewCard = document.getElementById("view-card");
+const viewRecap = document.getElementById("view-recap");
+
+function showRecap() {
+  viewCard.style.display = "none";
+  viewRecap.style.display = "flex";
+  renderRecap();
+  window.scrollTo(0, 0);
+}
+function showCard(idx) {
+  if (typeof idx === "number") current = idx;
+  viewRecap.style.display = "none";
+  viewCard.style.display = "flex";
+  render(true);
+  window.scrollTo(0, 0);
+}
+
+document.getElementById("to-recap").addEventListener("click", showRecap);
+document.getElementById("to-card").addEventListener("click", () => showCard());
 
 render(true);
 </script>
