@@ -389,6 +389,152 @@
     box-shadow: 0 4px 12px rgba(110, 160, 130, 0.25);
   }
   #settings-save:hover { background: #97D2B2; }
+
+  .recap-btn {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 5;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 3px 9px rgba(120, 110, 150, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8B83A6;
+  }
+  .recap-btn:hover { background: #FFFFFF; }
+  .recap-btn svg { width: 17px; height: 17px; }
+
+  .recap {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .recap.open { opacity: 1; pointer-events: auto; }
+  .recap-card {
+    width: 100%;
+    max-width: 360px;
+    max-height: calc(100vh - 44px);
+    overflow-y: auto;
+    background: #FFFFFF;
+    border-radius: 22px;
+    padding: 22px 20px;
+    box-shadow: 0 14px 32px rgba(120, 110, 150, 0.22);
+    transform: translateY(8px) scale(0.98);
+    transition: transform 0.25s ease;
+  }
+  .recap.open .recap-card { transform: translateY(0) scale(1); }
+  .recap-card h2 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #5E5277;
+    margin: 0 0 4px;
+  }
+  .recap-sub { font-size: 12.5px; color: #9C8FB8; margin-bottom: 14px; }
+  .recap-bar {
+    width: 100%;
+    height: 9px;
+    background: #F0EEF7;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .recap-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #A8DDC0, #84CBA6);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+  .recap-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 7px;
+  }
+  .recap-grid button {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 11px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .recap-grid button.today { box-shadow: 0 0 0 2px #6B5B95; }
+  .recap-grid button .chk {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 10px;
+    line-height: 1;
+    color: #2F6047;
+  }
+
+  .recap-overall {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .recap-ring { flex-shrink: 0; line-height: 0; }
+  .recap-sub {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    color: #7C7493;
+  }
+  .recap-sub strong {
+    display: block;
+    font-size: 22px;
+    color: #5E5277;
+  }
+  .recap-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #A99FC0;
+    margin: 0 0 11px;
+  }
+  .recap-subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-bottom: 20px;
+  }
+  .recap-subject { display: flex; align-items: center; gap: 12px; }
+  .rs-ring { flex-shrink: 0; line-height: 0; }
+  .rs-info { flex: 1; min-width: 0; }
+  .rs-label { font-size: 14px; font-weight: 500; color: #5A5468; }
+  .rs-count { font-size: 12px; color: #9C8FB8; margin-top: 1px; }
+  .rs-pct { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 15px; }
+
+  .today-btn {
+    margin-top: 12px;
+    background: rgba(255, 255, 255, 0.82);
+    color: #6B5B95;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 20px;
+    box-shadow: 0 3px 8px rgba(120, 110, 150, 0.14);
+  }
+  .today-btn:hover { background: #FFFFFF; }
 </style>
 </head>
 <body>
@@ -401,6 +547,14 @@
         <circle cx="9" cy="7" r="2.4" fill="#FBFAFE"></circle>
         <circle cx="15" cy="12" r="2.4" fill="#FBFAFE"></circle>
         <circle cx="8" cy="17" r="2.4" fill="#FBFAFE"></circle>
+      </svg>
+    </button>
+    <button class="recap-btn" id="recap-btn" aria-label="Récap">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="3" width="7" height="7" rx="2"></rect>
+        <rect x="14" y="3" width="7" height="7" rx="2"></rect>
+        <rect x="3" y="14" width="7" height="7" rx="2"></rect>
+        <rect x="14" y="14" width="7" height="7" rx="2"></rect>
       </svg>
     </button>
 
@@ -428,6 +582,7 @@
         <button class="nav-btn" id="next-btn">›</button>
       </div>
       <div class="outside-note" id="outside-note"></div>
+      <button class="today-btn" id="today-btn" style="display:none;">Revenir à aujourd'hui</button>
       <div class="progress-wrap">
         <div class="progress-label" id="progress-label"></div>
         <div class="progress-bar">
@@ -466,6 +621,24 @@
         <div class="settings-actions">
           <button id="settings-cancel">Annuler</button>
           <button id="settings-save">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Récap -->
+    <div class="recap" id="recap">
+      <div class="recap-card">
+        <h2>Mon récap</h2>
+        <div class="recap-overall">
+          <div class="recap-ring" id="recap-ring"></div>
+          <div class="recap-sub" id="recap-sub"></div>
+        </div>
+        <div class="recap-section-title">Par sujet de motivation</div>
+        <div class="recap-subjects" id="recap-subjects"></div>
+        <div class="recap-section-title">Calendrier</div>
+        <div class="recap-grid" id="recap-grid"></div>
+        <div class="settings-actions">
+          <button id="recap-close">Fermer</button>
         </div>
       </div>
     </div>
@@ -628,6 +801,15 @@ const topics = [
   ]}
 ];
 
+const topicColor = {
+  alcool: "#6B8FB5",
+  confiance: "#C77BA6",
+  energie: "#D6A24B",
+  alimentation: "#6FAE7C",
+  serenite: "#7E8AD1",
+  gratitude: "#C97B5A"
+};
+
 const catInfo = {
   cardio:    { label: "Cardio",      bg: "#FFE0CE", fg: "#C97B5A" },
   force:     { label: "Force douce", bg: "#FBEEC0", fg: "#B89126" },
@@ -781,6 +963,7 @@ const elPenseeBox = document.getElementById("pensee-box");
 const elPenseeIcon = document.getElementById("pensee-icon");
 const elDoneBtn = document.getElementById("done-btn");
 const elOutsideNote = document.getElementById("outside-note");
+const elTodayBtn = document.getElementById("today-btn");
 const elProgressLabel = document.getElementById("progress-label");
 const elProgressFill = document.getElementById("progress-fill");
 
@@ -830,6 +1013,8 @@ function render(animate) {
     elOutsideNote.textContent = "Jour " + (current + 1) + " sur " + nb;
   }
 
+  elTodayBtn.style.display = (todayIndex !== null && current !== todayIndex) ? "inline-block" : "none";
+
   let total = 0;
   try {
     for (let j = 0; j < nb; j++) {
@@ -867,6 +1052,9 @@ document.getElementById("prev-btn").addEventListener("click", () => {
 document.getElementById("next-btn").addEventListener("click", () => {
   current = (current + 1) % days.length;
   render(true);
+});
+elTodayBtn.addEventListener("click", () => {
+  if (todayIndex !== null) { current = todayIndex; render(true); }
 });
 
 /* ---------- Réglages ---------- */
@@ -942,6 +1130,92 @@ document.getElementById("settings-save").addEventListener("click", () => {
   closeSettings();
   render(true);
 });
+
+const elRecap = document.getElementById("recap");
+const recapGrid = document.getElementById("recap-grid");
+const recapSub = document.getElementById("recap-sub");
+const recapRing = document.getElementById("recap-ring");
+const recapSubjects = document.getElementById("recap-subjects");
+
+function ringSVG(pct, size, stroke, color, showText) {
+  const r = (size - stroke) / 2;
+  const cx = size / 2;
+  const circ = 2 * Math.PI * r;
+  const off = circ * (1 - pct / 100);
+  const txt = showText
+    ? '<text x="' + cx + '" y="' + cx + '" text-anchor="middle" dominant-baseline="central" font-family="Quicksand, sans-serif" font-weight="700" font-size="' + (size * 0.27).toFixed(0) + '" fill="#5E5277">' + pct + '%</text>'
+    : '';
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">'
+    + '<circle cx="' + cx + '" cy="' + cx + '" r="' + r + '" fill="none" stroke="#EEEBF5" stroke-width="' + stroke + '"/>'
+    + '<circle cx="' + cx + '" cy="' + cx + '" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="' + stroke + '" stroke-linecap="round" stroke-dasharray="' + circ.toFixed(2) + '" stroke-dashoffset="' + off.toFixed(2) + '" transform="rotate(-90 ' + cx + ' ' + cx + ')"/>'
+    + txt + '</svg>';
+}
+
+function renderRecap() {
+  recapGrid.innerHTML = "";
+  recapSubjects.innerHTML = "";
+  const nb = days.length;
+  let total = 0;
+  const stats = {};
+  days.forEach(d => {
+    const c = catInfo[d.ex.cat];
+    let done = false;
+    try { done = localStorage.getItem("carte-jour-fait-" + d.i) === "1"; } catch (e) {}
+    if (done) total++;
+    const lab = d.pensee.topic;
+    if (!stats[lab]) stats[lab] = { total: 0, done: 0 };
+    stats[lab].total++;
+    if (done) stats[lab].done++;
+
+    const cell = document.createElement("button");
+    cell.type = "button";
+    cell.textContent = (d.i + 1);
+    cell.style.background = done ? "#A8DDC0" : c.bg;
+    cell.style.color = done ? "#2F6047" : c.fg;
+    if (d.i === todayIndex) cell.classList.add("today");
+    if (done) {
+      const chk = document.createElement("span");
+      chk.className = "chk";
+      chk.textContent = "\u2713";
+      cell.appendChild(chk);
+    }
+    cell.addEventListener("click", () => { current = d.i; closeRecap(); render(true); });
+    recapGrid.appendChild(cell);
+  });
+
+  const pct = nb ? Math.round((total / nb) * 100) : 0;
+  recapRing.innerHTML = ringSVG(pct, 96, 10, "#84CBA6", true);
+  recapSub.innerHTML = "<strong>" + total + " / " + nb + "</strong> jours réussis";
+
+  const chosen = topics.filter(t => selectedTopics.includes(t.id));
+  chosen.forEach(t => {
+    const s = stats[t.label] || { total: 0, done: 0 };
+    const sp = s.total ? Math.round((s.done / s.total) * 100) : 0;
+    const col = topicColor[t.id] || "#84CBA6";
+    const row = document.createElement("div");
+    row.className = "recap-subject";
+    const ring = document.createElement("div");
+    ring.className = "rs-ring";
+    ring.innerHTML = ringSVG(sp, 46, 5, col, false);
+    const info = document.createElement("div");
+    info.className = "rs-info";
+    info.innerHTML = '<div class="rs-label">' + t.label + '</div><div class="rs-count">' + s.done + ' / ' + s.total + ' jours</div>';
+    const pctEl = document.createElement("div");
+    pctEl.className = "rs-pct";
+    pctEl.style.color = col;
+    pctEl.textContent = sp + "%";
+    row.appendChild(ring);
+    row.appendChild(info);
+    row.appendChild(pctEl);
+    recapSubjects.appendChild(row);
+  });
+}
+function openRecap() { renderRecap(); elRecap.classList.add("open"); }
+function closeRecap() { elRecap.classList.remove("open"); }
+
+document.getElementById("recap-btn").addEventListener("click", openRecap);
+document.getElementById("recap-close").addEventListener("click", closeRecap);
+elRecap.addEventListener("click", (e) => { if (e.target === elRecap) closeRecap(); });
 
 rebuild();
 render(true);
